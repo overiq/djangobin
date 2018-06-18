@@ -1,0 +1,52 @@
+{% extends 'djangobin/base.html' %}
+
+{% load static %}
+{% load humanize %}
+
+{% block title %}
+    Account Preferences - {{ block.super }}
+{% endblock %}
+
+{% block main %}
+
+    <div class="row">
+
+        <div class="col-lg-6 col-md-6 col-sm-6">
+
+            <h4>Change Account Preferences</h4>
+
+            <hr>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <p class="alert alert-info">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+
+            <form action="" method="post" class="form-horizontal" >
+                {% csrf_token %}
+
+                <table class="table">
+                    {{ form.as_table }}
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td><button type="submit" class="btn btn-primary">Submit</button></td>
+                    </tr>
+                </table>
+
+            </form>
+
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <h4>Related Links</h4>
+            <p>
+                <a href="{% url 'djangobin:profile' request.user.username %}">My Pastes</a> <br>
+                <a href="{% url 'djangobin:user_details' %}">Account Details</a> <br>
+                <a href="{% url 'djangobin:password_change' %}">Change Password.</a> <br>
+            </p>
+        </div>
+
+    </div>
+
+{% endblock %}

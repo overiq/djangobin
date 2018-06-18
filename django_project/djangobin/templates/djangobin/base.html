@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    {% load static %}
+    {% load humanize %}
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Djangobin{% endblock %}</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{% static 'djangobin/css/bootstrap.min.css' %}" >
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="{% static 'djangobin/css/bootstrap-select.min.css' %}" >
+
+    <link href="https://use.fontawesome.com/releases/v5.0.7/css/all.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="{% static 'djangobin/css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'djangobin/css/default.css' %}">
+</head>
+<body>
+
+<nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+                    aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'djangobin:index' %}">DjangoBin</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li {% if request.path == '/' %}class='active'{% endif %} >
+                    <a href="{% url 'djangobin:index' %}">Add new</a>
+                </li>
+                <li {% if request.path == '/trending/' %}class='active'{% endif %}>
+                    <a href="{% url 'djangobin:trending_snippets' %}">Trending<span class="sr-only">(current)</span></a>
+                </li>
+                <li {% if request.path == '/about/' %}class='active'{% endif %}>
+                    <a href="{% url 'djangobin:about' %}">About</a>
+                </li>
+                <li {% if request.path == '/contact/' %}class='active'{% endif %}>
+                    <a href="{% url 'djangobin:contact' %}">Contact</a>
+                </li>
+            </ul>
+
+            <form action="{% url 'djangobin:search' %}" class="navbar-form navbar-left" method="get">
+                <div class="form-group">
+                    <input type="text" name="query" class="form-control"
+                           placeholder="Search" value="{{ request.GET.query }}">
+                </div>
+            </form>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                       aria-haspopup="true" aria-expanded="false">
+                        {% if request.user.is_authenticated %}
+                            {{ request.user.username|upper }}
+                        {% else %}
+                            GUEST
+                        {% endif %}
+                        <span class="caret"></span>
+                    </a>
+                    {% if request.user.is_authenticated %}
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'djangobin:profile' request.user %}">My Pastes</a></li>
+                            <li><a href="{% url 'djangobin:user_details' %}">Account Details</a></li>
+                            <li><a href="{% url 'djangobin:settings' %}">Settings</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="{% url 'djangobin:logout' %}">Logout</a></li>
+                        </ul>
+                    {% else %}
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'djangobin:signup' %}">Sign Up</a></li>
+                            <li><a href="{% url 'djangobin:login' %}">Login</a></li>
+                        </ul>
+                    {% endif %}
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-lg-9 col-md-9">
+
+            {% if not request.user.is_authenticated and not request.path == '/login/'  %}
+                <p class="alert alert-info">
+                    <a href="{% url 'djangobin:login' %}?next={{ request.path }}" class="alert-link">Login</a> to access other cool features.
+                </p>
+            {% endif %}
+
+
+            {% block main %}
+                {#  override this block in the child template  #}
+            {% endblock %}
+
+        </div>
+
+        <div class="col-lg-3 col-md-3 text-center hidden-sm hidden-xs">
+            <p>Recent Snippets</p>
+
+            <div class="list-group">
+                {% for recent_snippet in recent_snippets %}
+                    <a href="{{ recent_snippet.get_absolute_url }}" class="list-group-item">
+                        <h5 class="list-group-item-heading"><span class="fa fa-globe
+"></span> {{ recent_snippet.title }}</h5>
+                        <p class="list-group-item-text">{{ recent_snippet.created_on|naturaltime }}</p>
+                    </a>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<footer>
+    <div class="social-icons">
+        <div class="container text-center">
+            <ul class="list-inline">
+                <li class="list-inline-item social-github">
+                    <a href="https://github.com/">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </li>
+                <li class="list-inline-item social-twitter">
+                    <a href="https://twitter.com/">
+                        <i class="fab fa-twitter-square"></i>
+                    </a>
+                </li>
+                <li class="list-inline-item social-facebook">
+                    <a href="https://www.facebook.com/">
+                        <i class="fab fa-facebook-square"></i>
+                    </a>
+                </li>
+                <li class="list-inline-item social-google-plus">
+                    <a href="https://plus.google.com/">
+                        <i class="fab fa-google-plus-g"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-footer">
+        <div class="container text-center">
+            <ul>
+                <li><a href="https://github.com/overiq/djangobin">Source Code</a></li>
+                <li><a href="https://overiq.com/">OverIQ</a></li>
+                <li><a href="{% url 'djangobin:eula' %}">EULA</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src={% static "djangobin/js/jquery.js" %}></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<!-- Latest compiled and minified JavaScript -->
+<script src={% static "djangobin/js/bootstrap.min.js" %}></script>
+
+<!-- Latest compiled and minified JavaScript -->
+<script src={% static "djangobin/js/bootstrap-select.min.js" %}></script>
+
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+
+</script>
+
+</body>
+</html>

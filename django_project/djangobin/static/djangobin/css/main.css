@@ -1,0 +1,108 @@
+body { padding-top: 70px; }
+
+/*.optional-settings select {*/
+/*display: inline;*/
+/*width: 300px;*/
+/*margin-left: 10px;*/
+/*}*/
+
+.social-icons {
+    margin: 30px 0;
+}
+
+footer .social-icons ul.list-inline li a {
+    display: block;
+    width: 50px;
+    height: 50px;
+    color: #fff;
+    border-radius: 100%;
+    font-size: 25px;
+    line-height: 50px;
+}
+
+footer .social-icons ul.list-inline li.social-github a {
+    background-color: #333;
+    transition: all .2s ease-in-out;
+}
+
+footer .social-icons ul.list-inline li.social-twitter a {
+    background-color: #1da1f2;
+    transition: all .2s ease-in-out;
+}
+
+footer .social-icons ul.list-inline li.social-facebook a {
+    background-color: #3b5998;
+    transition: all .2s ease-in-out;
+}
+
+footer .social-icons ul.list-inline li.social-google-plus a {
+    background-color: #dd4b39;
+    transition: all .2s ease-in-out;
+}
+
+.main-footer{
+    background-color: #2a2730;
+}
+
+.main-footer ul{
+    margin-top: 10px;
+    padding-left: 0;
+}
+
+.main-footer li{
+    display: inline;
+}
+
+.main-footer li a{
+    color: aliceblue;
+}
+
+.main-footer li+ li{
+    margin-left: 15px;
+}
+
+.codeblock{
+    margin-bottom: 20px;
+    border: 1px solid #e3e3e3;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+}
+
+.codeblock pre{
+    border: none;
+}
+
+.codeblock .code-wrapper{
+    overflow-x: auto;
+}
+
+.post-meta{
+    margin-bottom: 20px;
+}
+
+.toolbar{
+    padding: 4px 2px;
+    border-bottom: 1px solid #e3e3e3;
+}
+
+.toolbar span.at-right{
+    float: right;
+}
+
+.toolbar a {
+    padding: 4px 6px;
+    background-color: #e3e3e3;
+    border-radius: 2px;
+}
+
+.toolbar a:hover {
+    text-decoration: none;
+}
+
+.db-form input{
+    width: 300px;
+}
+
+.db-ads {
+    margin-bottom: 20px;
+}

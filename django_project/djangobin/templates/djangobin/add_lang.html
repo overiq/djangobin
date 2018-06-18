@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Add Lanugage
+{% endblock %}
+
+{% block content %}
+
+    <h2>Add a new Language</h2>
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {{ form.non_field_errors }}
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <th>{{ form.name.label_tag }}</th>
+                <td>
+                    {{ form.name.errors }}
+                    {{ form.name }}
+                </td>
+            </tr>
+            <tr>
+                <th>{{ form.lang_code.label_tag }}</th>
+                <td>
+                    {{ form.lang_code.errors }}
+                    {{ form.lang_code }}
+                </td>
+            </tr>
+            <tr>
+                <th>{{ form.slug.label_tag }}</th>
+                <td>
+                    {{ form.slug.errors }}
+                    {{ form.slug }}
+                </td>
+            </tr>
+            <tr>
+                <th>{{ form.mime.label_tag }}</th>
+                <td>
+                    {{ form.mime.errors }}
+                    {{ form.mime }}
+                    {{ form.mime.help_text }}
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit"></td>
+            </tr>
+        </table>
+    </form>
+
+{% endblock %}
+
+

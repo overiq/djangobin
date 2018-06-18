@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>{% block title %}Default Title{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'djangobin/css/bootstrap.min.css' %}">
+    <script src="{% static 'djangobin/js/jquery.js' %}"></script>
+</head>
+<body>
+
+<nav>
+    <a href="#">Home</a>
+    <a href="#">blog</a>
+    <a href="#">Contact</a>
+    <a href="#">Career</a>
+</nav>
+
+{% block content %}
+
+{% endblock %}
+
+<hr>
+
+{% block footer %}
+    <p>Creative Commons Attribution 4.0 International Licence</p>
+{% endblock %}
+
+</body>
+</html>

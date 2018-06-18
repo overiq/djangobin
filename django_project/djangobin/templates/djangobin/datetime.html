@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}
+        Date & Time - {{ block.super }}
+{% endblock %}
+
+{% block content %}
+
+    {% if now %}
+        <p>Current date and time is {{ now }}</p>
+    {% else %}
+        <p>now variable is not available</p>
+    {% endif %}
+
+    <p>Current scheme: {{ request.scheme }}</p>
+    <p>BASE_DIR : {{ base_dir }}</p>
+
+{% endblock %}

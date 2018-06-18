@@ -1,0 +1,68 @@
+{% extends 'djangobin/base.html' %}
+
+{% load static %}
+{% load humanize %}
+
+{% block title %}
+    Trending {{ lang.name }} Snippets - {{ block.super }}
+{% endblock %}
+
+{% block main %}
+
+    <h5><i class="fas fa-chart-line"></i> Trending {{ lang.name }} Snippets</h5>
+    <hr>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Date</th>
+            <th>Hits</th>
+            <th>Language</th>
+            <th>User</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for snippet in snippets %}
+            <tr>
+                <td><i class="fas fa-globe"></i>
+                    <a href="{{ snippet.get_absolute_url }}">{{ snippet.title }}</a>
+                </td>
+                <td title="{{ snippet.created_on }}">{{ snippet.created_on|naturaltime }}</td>
+                <td>{{ snippet.hits }}</td>
+                <td><a href="{% url 'djangobin:trending_snippets' snippet.language.slug  %}">{{ snippet.language }}</a></td>
+                {% if not snippet.user.profile.private %}
+                    <td><a href="{{ snippet.user.profile.get_absolute_url }}">{{ snippet.user.username|title }}</a></td>
+                {% else %}
+                    <td>-</td>
+                {% endif %}
+
+            </tr>
+        {% empty %}
+            <tr class="text-center">
+                <td colspan="4">There are no snippets.</td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+    {% if snippets.paginator.num_pages > 1 %}
+        <nav aria-label="...">
+            <ul class="pager">
+
+                <li>Page {{ snippets.number }} of {{ snippets.paginator.num_pages }}</li>
+
+                {% if snippets.has_previous %}
+                    <li><a href="?page={{ snippets.previous_page_number }}">Previous</a></li>
+                {% endif %}
+
+                {% if snippets.has_next %}
+                    <li><a href="?page={{ snippets.next_page_number }}">Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
+
+{% endblock %}

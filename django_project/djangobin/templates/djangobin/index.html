@@ -1,0 +1,65 @@
+{% extends 'djangobin/base.html' %}
+
+{% load static %}
+
+{% block main %}
+
+    <form action="" class="form-horizontal" method="post">
+
+        {% csrf_token %}
+
+        {{ form.original_code.errors }}
+
+        {{ form.original_code }}
+
+        <hr>
+
+        <div class="form-group">
+            <label for="{{ form.language.id_for_label }}" class="col-sm-2 control-label">Language</label>
+            <div class="col-lg-10 col-md-10 col-sm-10">
+                {{ form.language }}
+            </div>
+        </div>
+
+        {{ form.expiration.errors }}
+
+        <div class="form-group">
+            <label for="{{ form.expiration.id_for_label }}" class="col-sm-2  control-label">Expiration</label>
+            <div class="col-lg-10 col-md-10 col-sm-10">
+                {{ form.expiration }}
+            </div>
+        </div>
+
+        {{ form.exposure.errors }}
+
+        <div class="form-group">
+            <label for="{{ form.exposure.id_for_label }}" class="col-sm-2  control-label">Exposure</label>
+            <div class="col-lg-10 col-md-10 col-sm-10">
+                {{ form.exposure }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.title.id_for_label }}" class="col-sm-2  control-label">Title</label>
+            <div class="col-lg-10 col-md-10 col-sm-10">
+                {{ form.title }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.snippet_tags.id_for_label }}" class="col-sm-2  control-label">Tags</label>
+            <div class="col-lg-10 col-md-10 col-sm-10">
+                {{ form.snippet_tags }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label"></label>
+            <div class="col-lg-10 col-md-10 col-sm-10">
+                <button type="submit" class="btn btn-primary">Create</button>
+            </div>
+        </div>
+
+    </form>
+
+{% endblock %}

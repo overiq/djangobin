@@ -1,0 +1,48 @@
+{% extends 'djangobin/base.html' %}
+
+{% block title %}
+    User Details - {{ block.super }}
+{% endblock %}
+
+{% block main %}
+
+    <div class="row">
+
+        <div class="col-lg-6 col-md-6 col-sm-6">
+
+            <h4>Account Details</h4>
+
+            <hr>
+
+            <dl class="dl-horizontal">
+                <dt>Username</dt>
+                <dd>{{ request.user.username }}</dd>
+
+                <dt>Email</dt>
+                <dd>{{ request.user.email }}</dd>
+
+                <dt>Date Joined</dt>
+                <dd>{{ request.user.date_joined }}</dd>
+
+                <dt>Last Login</dt>
+                <dd>{{ request.user.last_login }}</dd>
+
+                <dt>Snippet created</dt>
+                <dd>{{ request.user.profile.get_snippet_count }}</dd>
+            </dl>
+
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <h4>Related Links</h4>
+            <p>
+                <a href="{% url 'djangobin:profile' request.user.username %}">My Pastes</a> <br>
+                <a href="{% url 'djangobin:settings' %}">Settings</a> <br>
+                <a href="{% url 'djangobin:password_change' %}">Change Password.</a> <br>
+                <a href="{% url 'djangobin:logout' %}">Logout.</a> <br>
+            </p>
+        </div>
+
+    </div>
+
+{% endblock %}

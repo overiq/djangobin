@@ -1,0 +1,61 @@
+{% extends 'djangobin/base.html' %}
+
+{% block title %}
+    {{ request.GET.query }} - {{ block.super }}
+{% endblock %}
+
+{% block main %}
+
+    <form action="" class="form-inline">
+
+        <div class="form-group">
+            {{ form.query }}
+        </div>
+
+        {% if request.user.is_authenticated %}
+            <div class="checkbox">
+                <label>
+                    {{ form.mysnippet }} Only search my snippets.
+                </label>
+            </div>
+        {% endif %}
+
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
+    <hr>
+
+    {% for snippet in snippets %}
+
+        {% if forloop.first %}
+            <h5>{{ snippets.paginator.count }} record{{ snippets.paginator.count|pluralize }} found.</h5>
+            <hr>
+        {% endif %}
+
+        <h4><a href="{{ snippet.get_absolute_url }}">{{ snippet.title }}</a></h4>
+        <p>{{ snippet.original_code|truncatechars:250 }}</p>
+        <hr>
+
+    {% empty %}
+        <h5>No records found.</h5>
+    {% endfor %}
+
+    {% if snippets.paginator.num_pages > 1 %}
+        <nav aria-label="...">
+            <ul class="pager">
+
+                <li>Page {{ snippets.number }} of {{ snippets.paginator.num_pages }}</li>
+
+                {% if snippets.has_previous %}
+                    <li><a href="?query={{ request.GET.query }}&page={{ snippets.previous_page_number }}">Previous</a></li>
+                {% endif %}
+
+                {% if snippets.has_next %}
+                    <li><a href="?query={{ request.GET.query }}&page={{ snippets.next_page_number }}">Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
+
+{% endblock %}
+
